@@ -26,14 +26,14 @@ import android.net.Uri;
 import android.os.BatteryManager;
 import android.os.PowerManager;
 import android.preference.PreferenceManager;
-import android.support.annotation.NonNull;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.view.ContextThemeWrapper;
-import android.support.v7.view.menu.MenuBuilder;
-import android.support.v7.view.menu.MenuPopupHelper;
-import android.support.v7.widget.PopupMenu;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.NonNull;
+import com.google.android.material.snackbar.Snackbar;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.view.ContextThemeWrapper;
+import androidx.appcompat.view.menu.MenuBuilder;
+import androidx.appcompat.view.menu.MenuPopupHelper;
+import androidx.appcompat.widget.PopupMenu;
+import androidx.recyclerview.widget.RecyclerView;
 import android.text.format.Formatter;
 import android.text.method.LinkMovementMethod;
 import android.util.Log;
@@ -548,7 +548,7 @@ public class UpdatesListAdapter extends RecyclerView.Adapter<UpdatesListAdapter.
         int percent = Math.round(100.f * intent.getIntExtra(BatteryManager.EXTRA_LEVEL, 100) /
                 intent.getIntExtra(BatteryManager.EXTRA_SCALE, 100));
         int plugged = intent.getIntExtra(BatteryManager.EXTRA_PLUGGED, 0);
-        int required = (plugged & BatteryManager.BATTERY_PLUGGED_ANY) != 0 ?
+        int required = (plugged != 0 && (BatteryManager.BATTERY_PLUGGED_USB != 0 || BatteryManager.BATTERY_PLUGGED_AC != 0 || BatteryManager.BATTERY_PLUGGED_WIRELESS != 0))  ?
                 mActivity.getResources().getInteger(R.integer.battery_ok_percentage_charging) :
                 mActivity.getResources().getInteger(R.integer.battery_ok_percentage_discharging);
         return percent >= required;
